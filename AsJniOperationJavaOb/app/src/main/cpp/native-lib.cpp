@@ -226,7 +226,6 @@ Java_com_derry_as_1jni_1project_MainActivity_delQuote(JNIEnv *env, jobject thiz)
        env->DeleteGlobalRef(dogClass);
        dogClass = NULL; // 最好给一个NULL，指向NULL的地址，不要去成为悬空指针，为了好判断悬空指针的出现
    }
-
    // 测试下
    show();
 }
