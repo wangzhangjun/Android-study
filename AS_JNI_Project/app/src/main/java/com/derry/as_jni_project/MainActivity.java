@@ -8,7 +8,8 @@ import android.widget.TextView;
 // 生成头文件：javah com.derry.as_jni_project.MainActivity
 public class MainActivity extends AppCompatActivity {
     static {
-        System.loadLibrary("native-lib");
+        // System.load(c:/xx/xxx/xx) 以绝对路径的方式去加载动态链接库
+        System.loadLibrary("native-lib"); //这种是从库目录遍历层级目录，去自动的寻找apk里面的lib/libnative-lib.so
     }
     public static final int A = 100;
     public String name = "Derry"; // 签名：Ljava/lang/String;
