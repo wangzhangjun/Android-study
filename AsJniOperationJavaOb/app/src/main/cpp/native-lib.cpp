@@ -111,21 +111,9 @@ Java_com_derry_as_1jni_1project_MainActivity_putObject(JNIEnv *env,
     env->CallStaticVoidMethod(studentClass, showInfo, jstringValue);
 }
 
-// C++ 堆 栈 ...
-// JNI函数  局部引用，全局引用，...
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_derry_as_1jni_1project_MainActivity_insertObject(JNIEnv *env, jobject thiz) {
-    /*jstring str = env->GetStringUTFChars();
-    jstring str = env->GetStringUTFChars();
-    jstring str = env->GetStringUTFChars();
-    jstring str = env->GetStringUTFChars();
-    jstring str = env->GetStringUTFChars();
-    jstring str = env->GetStringUTFChars();
-    jstring str = env->GetStringUTFChars();
-    // 好习惯：
-    // 我用完了，我记释放，在我函数执行过程中，不会导致 内存占用多
-    env->ReleaseStringUTFChars()*/
 
     // 1.通过包名+类名的方式 拿到 Student class  凭空拿class
     const char *studentstr = "com/derry/as_jni_project/Student";
@@ -165,12 +153,26 @@ Java_com_derry_as_1jni_1project_MainActivity_insertObject(JNIEnv *env, jobject t
     // 第二类
     // env->ReleaseStringUTFChars()
 
-    // TODO 局部引用： jobject jclass jstring ...  【函数结束后，会自动释放】
+    // C++ 中有堆 栈 ，但是JNI函数只有，局部引用，全局引用，...
+    // 这里也可以不用释放，因为上面的 jobject jclass jstring 都是局部引用
+    //那为什么还要释放呢？假设下面的有很多jstring,对于安卓设备来说，内存是很紧张的，假设是一个比较长时间的函数，在这个时间段内内存就很吃紧。
+    // 好习惯：
+    // 我用完了，我记释放，在我函数(执行过程中)，不会导致内存占用多
+    /*jstring str = env->GetStringUTFChars();
+    jstring str = env->GetStringUTFChars();
+    jstring str = env->GetStringUTFChars();
+    jstring str = env->GetStringUTFChars();
+    jstring str = env->GetStringUTFChars();
+    jstring str = env->GetStringUTFChars();
+    jstring str = env->GetStringUTFChars();
+    env->ReleaseStringUTFChars()
+     */
 }
 
 
 jclass dogClass; // 你以为这个是全局引用，实际上他还是局部引用
-
+//当没有提升全局引用的时候，第二次就会crash
+//因为，JNI函数结束，会释放局部引用   dogClass虽然被释放，但是还不等于NULL，只是一个悬空指针而已，所以第二次进不来if，会奔溃
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_derry_as_1jni_1project_MainActivity_testQuote(JNIEnv *env, jobject thiz) {
@@ -178,16 +180,15 @@ Java_com_derry_as_1jni_1project_MainActivity_testQuote(JNIEnv *env, jobject thiz
         /*const char * dogStr = "com/derry/as_jni_project/Dog";
         dogClass = env->FindClass(dogStr);*/
 
-        // 升级全局引用： JNI函数结束也不释放，反正就是不释放，必须手动释放   ----- 相当于： C++ 对象 new、手动delete
+        // 升级全局引用：JNI函数结束也不释放，反正就是不释放，必须手动释放  ----- 相当于： C++ 对象 new、手动delete
         const char * dogStr = "com/derry/as_jni_project/Dog";
         jclass temp = env->FindClass(dogStr);
         dogClass = static_cast<jclass>(env->NewGlobalRef(temp)); // 提升全局引用
-        // 记住：用完了，如果不用了，马上释放，C C++ 工程师的赞美
+        // 记住：用完了，如果不用了，马上释放，C/C++工程师的赞美
         env->DeleteLocalRef(temp);
     }
 
-    // <init> V  是不会变的
-
+    // <init> V  是不会变的,就代表构造函数
     // 构造函数一
     jmethodID init = env->GetMethodID(dogClass, "<init>", "()V");
     jobject dog = env->NewObject(dogClass, init);
@@ -195,7 +196,6 @@ Java_com_derry_as_1jni_1project_MainActivity_testQuote(JNIEnv *env, jobject thiz
     // 构造函数2
     init = env->GetMethodID(dogClass, "<init>", "(I)V");
     dog = env->NewObject(dogClass, init, 100);
-
 
     // 构造函数3
     init = env->GetMethodID(dogClass, "<init>", "(II)V");
@@ -205,15 +205,13 @@ Java_com_derry_as_1jni_1project_MainActivity_testQuote(JNIEnv *env, jobject thiz
     init = env->GetMethodID(dogClass, "<init>", "(III)V");
     dog = env->NewObject(dogClass, init, 400, 500, 600);
 
-    env->DeleteLocalRef(dog); // 释放
+    env->DeleteLocalRef(dog); // 在末尾释放其实没啥意思，因为函数都要结束了，需要注意的是在上面的某个环节使用完，释放
     // dogClass = NULL; // 是不是问题解决了，不能这样干（JNI函数结束后，还怎么给你释放呢）
 
     // 这样就解决了
     /*env->DeleteGlobalRef(studentClass);
     studentClass = NULL;*/
 }
-
-// JNI函数结束，会释放局部引用   dogClass虽然被释放，但是还不等于NULL，只是一个悬空指针而已，所以第二次进不来IF，会奔溃
 
 // 非常方便，可以使用了
 extern int age; // 声明age
