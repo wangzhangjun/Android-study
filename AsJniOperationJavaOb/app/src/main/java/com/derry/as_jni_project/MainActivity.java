@@ -46,12 +46,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //传java对象
     public void test02(View view) {
         Student student = new Student(); // Java new
         student.name = "史泰龙";
         student.age = 88;
         putObject(student, "九阳神功");
-
     }
 
     public void test03(View view) {

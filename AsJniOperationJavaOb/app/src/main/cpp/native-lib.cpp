@@ -55,24 +55,20 @@ Java_com_derry_as_1jni_1project_MainActivity_testArrayAction(JNIEnv *env, jobjec
     // env->
 
     /**
+     * 这个函数可以把改变映射会java端
      * 0:           刷新Java数组，并 释放C++层数组
      * JNI_COMMIT:  只提交 只刷新Java数组，不释放C++层数组
      * JNI_ABORT:   只释放C++层数组
      */
     env->ReleaseIntArrayElements(ints, jintArray, 0);
-
     // ③：jobjectArray 代表是Java的引用类型数组，不一样
     jsize strssize = env->GetArrayLength(strs);
     for (int i = 0; i < strssize; ++i) {
-
         jstring jobj = static_cast<jstring>(env->GetObjectArrayElement(strs, i));
-
         // 模糊：isCopy内部启动的机制
         // const char* GetStringUTFChars(jstring string, jboolean* isCopy)
         const char *jobjCharp = env->GetStringUTFChars(jobj, NULL);
-
         LOGI("参数四 引用类型String 具体的：%s\n", jobjCharp);
-
         // 释放jstring
         env->ReleaseStringUTFChars(jobj, jobjCharp);
     }
@@ -106,8 +102,8 @@ Java_com_derry_as_1jni_1project_MainActivity_putObject(JNIEnv *env,
     env->CallVoidMethod(student, setName, value);
 
     // 4.调用 getName
-    jstring getNameResult = static_cast<jstring>(env->CallObjectMethod(student, getName));
-    const char *getNameValue = env->GetStringUTFChars(getNameResult, NULL);
+    jstring getNameResult = static_cast<jstring>(env->CallObjectMethod(student, getName));  //jni层
+    const char *getNameValue = env->GetStringUTFChars(getNameResult, NULL);  //c++层
     LOGE("调用到getName方法，值是:%s\n", getNameValue);
 
     // 5.调用静态showInfo
@@ -127,18 +123,16 @@ Java_com_derry_as_1jni_1project_MainActivity_insertObject(JNIEnv *env, jobject t
     jstring str = env->GetStringUTFChars();
     jstring str = env->GetStringUTFChars();
     jstring str = env->GetStringUTFChars();
-
     // 好习惯：
     // 我用完了，我记释放，在我函数执行过程中，不会导致 内存占用多
     env->ReleaseStringUTFChars()*/
-
 
     // 1.通过包名+类名的方式 拿到 Student class  凭空拿class
     const char *studentstr = "com/derry/as_jni_project/Student";
     jclass studentClass = env->FindClass(studentstr);
 
     // 2.通过student的class  实例化此Student对象   C++ new Student
-    jobject studentObj = env->AllocObject(studentClass); // AllocObject 只实例化对象，不会调用对象的构造函数
+    jobject studentObj = env->AllocObject(studentClass); // AllocObject只实例化对象，不会调用对象的构造函数
 
     // 方法签名的规则
     jmethodID setName = env->GetMethodID(studentClass, "setName", "(Ljava/lang/String;)V");
@@ -149,22 +143,16 @@ Java_com_derry_as_1jni_1project_MainActivity_insertObject(JNIEnv *env, jobject t
     env->CallVoidMethod(studentObj, setName, strValue);
     env->CallVoidMethod(studentObj, setAge, 99);
 
-
-    // env->NewObject() // NewObject 实例化对象，会调用对象的构造函数
-
-
-    // ====================  下面是 Person对象  调用person对象的  setStudent 函数等
+    // ====================  下面是 Person对象,调用person对象的 setStudent 函数等
 
     // 4.通过包名+类名的方式 拿到 Student class  凭空拿class
     const char *personstr = "com/derry/as_jni_project/Person";
     jclass personClass = env->FindClass(personstr);
-
     jobject personObj = env->AllocObject(personClass); // AllocObject 只实例化对象，不会调用对象的构造函数
+    // env->NewObject() // NewObject 实例化对象，会调用对象的构造函数
 
     // setStudent 此函数的 签名 规则
-    jmethodID setStudent = env->GetMethodID(personClass, "setStudent",
-            "(Lcom/derry/as_jni_project/Student;)V");
-
+    jmethodID setStudent = env->GetMethodID(personClass, "setStudent","(Lcom/derry/as_jni_project/Student;)V");
     env->CallVoidMethod(personObj, setStudent, studentObj);
 
     // 规范：一定记得释放【好习惯】
