@@ -7,15 +7,11 @@ import android.widget.TextView;
 
 // 生成头文件：javah com.derry.as_jni_project.MainActivity
 public class MainActivity extends AppCompatActivity {
-
     static {
         System.loadLibrary("native-lib");
     }
-
     public static final int A = 100;
-
     public String name = "Derry"; // 签名：Ljava/lang/String;
-
     public static int age = 29; // 签名：I
 
     // Java 本地方法  实现：native层
@@ -27,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     public static native void changeAge();
     public native void callAddMethod();
 
-
     // 专门写一个函数，给native成调用
     public int add(int number1, int number2) {
         return number1 + number2;
@@ -37,15 +32,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
          // Example of a call to a native method
-         TextView tv = findViewById(R.id.sample_text);
+        TextView tv = findViewById(R.id.sample_text);
         changeName();
         tv.setText(name);
-
         changeAge();
         tv.setText("" + age);
-
         callAddMethod();
     }
 
