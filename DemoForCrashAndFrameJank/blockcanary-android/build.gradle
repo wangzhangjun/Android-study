@@ -1,0 +1,27 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace "com.github.moduth.blockcanary"
+    compileSdk LIBRARY_COMPILE_SDK_VERSION
+
+    defaultConfig {
+        minSdk LIBRARY_MIN_SDK_VERSION
+        targetSdk LIBRARY_TARGET_SDK_VERSION
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':blockcanary-analyzer')
+//    implementation 'com.github.markzhai:blockcanary-analyzer:1.5.0'
+}

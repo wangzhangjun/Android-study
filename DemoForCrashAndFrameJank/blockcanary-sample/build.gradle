@@ -1,0 +1,30 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace "com.example.blockcanary"
+    compileSdk LIBRARY_COMPILE_SDK_VERSION
+
+    defaultConfig {
+        minSdk LIBRARY_MIN_SDK_VERSION
+        targetSdk LIBRARY_TARGET_SDK_VERSION
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    debugImplementation project(':blockcanary-android')
+    releaseImplementation project(':blockcanary-android-no-op')
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+}
