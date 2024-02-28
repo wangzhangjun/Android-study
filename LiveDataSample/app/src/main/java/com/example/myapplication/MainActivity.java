@@ -3,6 +3,8 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
@@ -23,9 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         liveData1 = new MutableLiveData();
-
         liveData1.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -46,5 +46,11 @@ public class MainActivity extends AppCompatActivity {
                 liveData1.postValue("threadClick");  // 子线程中
             }
         }.start();
+    }
+
+    // 跳到第二个页面
+    public void newActivityClick(View view) {
+        Intent intent = new Intent(this, MainActivity2.class);
+        startActivity(intent);
     }
 }
