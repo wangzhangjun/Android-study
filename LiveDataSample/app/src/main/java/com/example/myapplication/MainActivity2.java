@@ -20,7 +20,15 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onChanged(String s) {  // 而且这个是在onStart之后，onResume之前执行
                 s+=s; // mainClickmainClick
-                Log.i("zhjwang", s);
+                Log.i("zhjwang-1", s);
+            }
+        });
+
+        MainActivity.liveData2.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                s+=s; // mainClickmainClick
+                Log.i("zhjwang-2", s);  // 第一次进来就不会执行了，只有第二次之后再进来才会执行
             }
         });
     }

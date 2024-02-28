@@ -20,12 +20,15 @@ public class MainActivity extends AppCompatActivity {
     * 3. 发消息：setValue/postValue
     * */
     public static MutableLiveData liveData1;
+    public static NonStickyMutableLiveData liveData2;  // 测试粘性，先发消息，在activity2页面中
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         liveData1 = new MutableLiveData();
+        liveData2 = new NonStickyMutableLiveData();
+
         liveData1.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void mainClick(View view) {
         liveData1.setValue("mainClick");
+        liveData2.setValue("Sticky");
     }
 
     // 在子线程中用postValue法消息，订阅者也是可以接收到的
