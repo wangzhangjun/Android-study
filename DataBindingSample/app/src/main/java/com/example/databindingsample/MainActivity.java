@@ -17,6 +17,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //这一行就是完成XML布局的初始化
+        /*
+        * DataBinding的几步：
+        * 1.build.gradle中加的databingding
+        * 2.xml文件中用的都加上
+        * 3.用DataBindingUtil.setContentView
+        * 4.binding
+        * 5.notifyPropertyChanged
+        * */
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
         //数据是从网络或是数据库拿来的

@@ -28,6 +28,6 @@ public class User extends BaseObservable {  // 被观察者
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
-        notifyPropertyChanged(BR.pwd);
+        notifyPropertyChanged(BR.pwd); // 更新UI
     }
 }
