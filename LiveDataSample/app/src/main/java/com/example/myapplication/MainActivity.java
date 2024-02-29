@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         // 使用企业级livedatabus的方式
         LiveDataBus.getInstance().with("msg", String.class,true).observe(this, new Observer<String>() {
             @Override
@@ -43,6 +44,23 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("zhjwang","收到了LiveDataBus数据1："+s);
             }
         });
+
+        /*
+         * 这个是验证循环发送
+         * 第一个observe接受到1之后，重新发送2
+         * 这个时候所有的都会收到2
+         * */
+//        liveData2 = new MutableLiveData<>();
+//
+//        liveData2.observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                Log.d("jett", "changed1 :" + s);
+//                if (s.equals("1")) {
+//                    liveData2.setValue("2");
+//                }
+//            }
+//        });
     }
 
     public void mainClick(View view) {
