@@ -35,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("zhjwang","收到了数据1："+s);
             }
         });
+
+        // 使用企业级livedatabus的方式
+        LiveDataBus.getInstance().with("msg", String.class,true).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.i("zhjwang","收到了LiveDataBus数据1："+s);
+            }
+        });
     }
 
     public void mainClick(View view) {
@@ -48,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 liveData1.postValue("threadClick");  // 子线程中
+                // 使用企业级总线的方式
+                LiveDataBus.getInstance().with("msg",String.class,true).postValue("threadClicklivebus");
             }
         }.start();
     }

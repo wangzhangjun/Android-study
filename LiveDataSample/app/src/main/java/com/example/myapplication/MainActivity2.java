@@ -24,6 +24,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
         });
 
+        // 解决粘性问题之后的测试
         MainActivity.liveData2.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -31,6 +32,23 @@ public class MainActivity2 extends AppCompatActivity {
                 Log.i("zhjwang-2", s);  // 第一次进来就不会执行了，只有第二次之后再进来才会执行
             }
         });
+
+        /*
+         * 这个是验证循环发送
+         * 第一个observe接受到1之后，重新发送2
+         * 这个时候所有的都会收到2
+         * */
+//        liveData2 = new MutableLiveData<>();
+//
+//        liveData2.observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                Log.d("jett", "changed1 :" + s);
+//                if (s.equals("1")) {
+//                    liveData2.setValue("2");
+//                }
+//            }
+//        });
     }
 
     @Override
