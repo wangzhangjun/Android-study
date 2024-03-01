@@ -4,12 +4,18 @@ import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.vip_dagger2_demo1.di.DaggerPresenterComponent;
+import com.example.vip_dagger2_demo1.di.Presenter;
 import com.example.vip_dagger2_demo1.object.HttpObject;
 import javax.inject.Inject;
 
 public class SecActivity extends AppCompatActivity {
     @Inject
     HttpObject httpObject;
+
+    @Inject
+    Presenter presenter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +24,7 @@ public class SecActivity extends AppCompatActivity {
         DaggerMyComponent.builder()
                 .httpModule(new HttpModule())
                 .databaseModule(new DatabaseModule())
+                .presenterComponent(DaggerPresenterComponent.create())
                 .build()
                 //上面的代码初始化了module和component
                 .injectSecActivity(this);
@@ -34,5 +41,6 @@ public class SecActivity extends AppCompatActivity {
         */
         ((MyApplication)getApplication()).getMyComponent().injectSecActivity(this);
         Log.i("jett2-quanju",httpObject.hashCode()+"-sec");
+        Log.i("jett2-quanju",presenter.hashCode()+"-sec-presenter");
     }
 }

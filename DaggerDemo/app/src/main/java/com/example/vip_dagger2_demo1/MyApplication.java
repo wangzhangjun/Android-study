@@ -1,5 +1,8 @@
 package com.example.vip_dagger2_demo1;
 import android.app.Application;
+
+import com.example.vip_dagger2_demo1.di.DaggerPresenterComponent;
+
 public class MyApplication extends Application {
     private MyComponent myComponent;
     @Override
@@ -9,6 +12,7 @@ public class MyApplication extends Application {
         myComponent=DaggerMyComponent.builder()
                 .httpModule(new HttpModule())
                 .databaseModule(new DatabaseModule())
+                .presenterComponent(DaggerPresenterComponent.create())  // new 出来这个子component
                 .build();
     }
 
