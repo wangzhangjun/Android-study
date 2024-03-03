@@ -1,0 +1,5 @@
+include ':jetpack_kotlin_project'
+rootProject.name='JetPackStudy'
+include ':app'
+include ':jetpack_app'
+include ':jetpack_app_kotlin'

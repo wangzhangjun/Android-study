@@ -1,0 +1,47 @@
+JetPack 核心库
+        Java版本
+        Kotlin学会
+
+
+DataBinding背了黑锅（80% 不好用）   最后：DataBinding 很香
+
+1.layout data ...  单独拆出一份 布局  === 专门DataBinding管理的
+2.LinearLayout TextView ....    单独拆出一份  布局   === UI显示的
+
+-------------
+DataBinding 官网： android:text="@{saf fldsaf  afdsf  逻辑 逻辑 fdsafdsfdsf   fsafdsl l逻辑}"
+
+官网 造成的误会，很多开发者，都误会了
+
+DataBinding 很多高级特性
+
+--------------------------------
+
+使用JetPack（以后新培养安卓程序员 大部分也会使用）
+你使用JetPack
+
+1.
+JetPack  Lifecycle ,livedata,viewmodel .... 源码解析，原理透析， Jetpack内部源码是怎么写出来的
+
+MVC  分层不清晰
+MVP  P接口地狱的问题
+MVVM 比较耗费性能   双向绑定机制
+
+黄金时代：
+JetPack + Mvvm  = Google标准化架构
+
+系统化学习，体系化，学习的方式：
+今天学的东西 有一点难度，我可以消化
+明天学的东西 有一点难度，我可以消化
+后天学的东西 有一点难度，我可以消化
+循序渐进的方式
+
+
+一节课：备课半个月=[]
+每周 三节直播课 消化干货
+有问题 直接找老师，远程帮你解决问题
+
+半个月： 先给同学们 面试指导，一对一辅导 电话交流
+面试专题（很多的视频录播， 学生腾讯面试的结晶）
+老师帮你找到工作后，在安心学习
+
