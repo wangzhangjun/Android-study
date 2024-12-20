@@ -6,4 +6,6 @@
     </style>
 
     <style name="Theme.TestActivity" parent="Base.Theme.TestActivity" />
+
+    <style name="Theme.AppCompat" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
