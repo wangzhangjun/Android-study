@@ -2,11 +2,13 @@ package com.example.activitylifecycle;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_main);
+        if(savedInstanceState != null) {
+            String tempData = savedInstanceState.getString("data_key");
+            Log.d(TAG, tempData);
+        }
         Button startNormalActivity = (Button) findViewById(R.id.start_normal_activity);
         Button startDialogActivity = (Button) findViewById(R.id.start_dialog_activity);
         startNormalActivity.setOnClickListener(new View.OnClickListener() {
@@ -75,5 +81,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         Log.d(TAG, "onRestart");
+    }
+
+    /*
+    * 当这个activity被回收的时候，比如我们已经在一些输入框中保存了一些数据，为了避免用户再次进来又得重新填一次，可以保存起来。
+    * 然后在 onCreate 的时候去读取Bundle, 在onCreate的时候都会传递Bundle进来，当在onSaveInstanceState存储的时候，onCreate的这个值就不为空。
+    *
+    * 这里Bundle和Intent一起来联合使用，比如可以把需要传递的数据保存到Bundle对象中，然后将Bundle对象保存到Intent中，到了目标的activity之后，先从Intent中取出来Bundle，然后把Bundle中的数据
+    * 取出来
+    * */
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        String tempData = "something you just typed";
+        outPersistentState.putString("data_key", tempData);
     }
 }
