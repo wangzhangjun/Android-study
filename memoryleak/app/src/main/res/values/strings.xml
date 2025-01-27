@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MemoryLeak</string>
+    <string name="activity_phone_listener_leak">PhoneListenerLeakActivity</string>
+</resources>
