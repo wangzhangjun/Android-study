@@ -12,4 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start DialogActivity" />
+    <Button
+        android:id="@+id/start_fragment_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start FragmentActivity" />
 </LinearLayout>
