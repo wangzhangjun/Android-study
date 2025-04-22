@@ -1,0 +1,44 @@
+plugins {
+    alias(libs.plugins.android.library)
+}
+
+println("hello library->gradle")
+println "${username}"
+println "${rootProject.ext.username}"
+
+// 赋值引用到config.gradle中的内容
+def androidId = rootProject.ext.androidId
+def appId = rootProject.ext.appId
+
+
+android {
+    namespace 'com.example.modular.mylibrary'
+    compileSdk androidId.compileSdk
+
+    defaultConfig {
+        minSdk androidId.minSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}

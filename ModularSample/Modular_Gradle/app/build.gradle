@@ -1,0 +1,57 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+println("hello gradle")
+//rootProject.ext.username = 164  可以在任意的地方去修改这个值
+println "${username}"
+
+// 赋值引用到config.gradle中的内容
+def androidId = rootProject.ext.androidId
+def appId = rootProject.ext.appId
+def url = rootProject.ext.url
+
+android {
+    namespace 'com.example.modular.gradle'
+    compileSdk androidId.compileSdk
+
+    defaultConfig {
+        applicationId appId.app
+        minSdk androidId.minSdk
+        targetSdk androidId.targetSdk
+        versionCode androidId.versionCode
+        versionName androidId.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    // 这个是可以生成BuildConfig.java文件的全局类
+    buildFeatures {
+        buildConfig true
+    }
+    // 和上面的配合
+    buildTypes {
+        debug {
+            buildConfigField("String", "debug", "\"${url.debug}\"")  // 这两句就可以在BuildConfig.java中生成,然后就可以在代码中全局引用了
+        }
+        release {
+            buildConfigField("String", "debug", "\"${url.release}\"") // 这两句就可以在BuildConfig.java中生成,然后就可以在代码中全局引用了
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}

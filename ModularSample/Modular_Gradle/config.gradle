@@ -1,0 +1,36 @@
+// 添加自定义属性，可以通过ext代码库
+// 把一些公共的可以定义在这里
+
+/*
+那么要使用这里定义的属性的话：
+    1.在最外层的build.gradle中，加入 apply from: "config.gradle"
+    2.在其他的字gradle中就可以直接调用：println "${username}"
+    3.上面的是简写，完整的写法：println "${rootProject.ext.username}"
+    4.rootProject.ext.username = 164  可以在任意的地方去修改这个值
+*/
+
+ext{
+    username = "zhjwang"
+    isRelease = true
+
+    // 建立map存储
+    androidId = [
+            compileSdk: 34,
+            minSdk :33,
+            targetSdk: 34,
+            versionCode: 1,
+            versionName :"1.0",
+    ]
+
+    appId = [
+            app : "com.example.modular.gradle",
+            library : "com.example.modular.mylibrary",
+    ]
+
+    url =[
+            "debug" : "https://11.22/debug",
+            "release" : "https://11.22/release",
+    ]
+
+
+}
