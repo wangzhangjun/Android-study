@@ -1,0 +1,32 @@
+.idea
+# 忽略所有子项目中的 build 目录
+**/build/
+
+# 忽略所有 .idea 目录（Android Studio / IntelliJ）
+**/.idea/
+
+# 忽略所有 .gradle 目录
+**/.gradle/
+
+# 忽略本地 gradle 缓存
+.gradle/
+
+# 忽略 Android Studio 自动生成的文件
+**/local.properties
+**/.DS_Store
+
+# 忽略 log、临时文件等
+*.log
+*.tmp
+
+# 忽略 macOS 系统文件
+.DS_Store
+
+# 忽略 Linux 生成的 core 文件
+core
+
+# 忽略 IntelliJ 编译输出
+**/out/
+
+# 忽略 VSCode 工作区设置（如果你用了 VSCode）
+**/.vscode/
