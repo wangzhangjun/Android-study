@@ -1,4 +1,4 @@
-package com.example.binderdemo1;
+package com.example.binder_theory2;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import com.example.servicedemo.ICalculator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,20 +29,20 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         Intent intent = new Intent(this, MyService.class);
         this.bindService(intent, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                ICalculator iCalculator = ICalculator.Stub.asInterface(service);// 拿到binder对象对应的binderProxy
+                ICalculator calculator = new ICalculator.Proxy(service);
                 Log.v("zhjwang", "service->" + service);
                 try {
                     int a = 3;
                     int b = 4;
-                    int x = iCalculator.add(a, b);
+                    int x = calculator.add(a, b);
                     Log.v("zhjwang", a + " + " + b + " = " + x);
-                    int y = iCalculator.sub(a, b);
-                    Log.v("zhjwang", a + " - " + b + " = " + y);
+                    int y = calculator.sub(a, b);
+                    Log.v("zhjwang", a + " + " + b + " = " + y);
                 } catch (Exception e) {
 
                 }

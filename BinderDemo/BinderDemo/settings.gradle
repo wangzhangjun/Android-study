@@ -1,3 +1,6 @@
 include ':app'
 rootProject.name = "ServiceDemo"
 include ':binderdemo1'
+include ':binder-theory1'
+include ':binder-theory2'
+include ':binderdemo_servicemanager'
